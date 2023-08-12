@@ -4,13 +4,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Turtle Bay</title>
   <script defer src="js/main.js"></script>
   <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-  <h1>Hello World</h1>
+  <h1>Turtle Bay</h1>
+  <main id="grid-wrapper">
+
+    <section id="instructions">
+      <div>
+        <p>It's hatching time. Help the baby turtles reach the sea</p>
+        <p>Avoid the obstacles!</p>
+
+        <div class="Controls">
+          <p>Controls</p>
+          <!-- <img> arrows-->
+        </div>
+      </div>
+      <div id="end-game">
+        <div id="loses">
+          <p>Game Over</p>
+        </div>
+        <div id="wins">
+          <p>You Win!!!</p>
+          <p>Your score: <span id="total-score">0</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="grid">
+      <!-- grid cells generate here -->
+    </section>
+
+    <section>
+      <div id="audio">
+        <audio class="seagles-audio"></audio>
+        <audio class="background-audio"></audio>
+      </div>
+
+      <div id="button">
+        <button>Start</button>
+        <button>Restart</button>
+      </div>
+    </section>
+
+    <section id="controls-wrapper current-game">
+      <p id="lives">🐢🐢🐢</p>
+      <p id="score">score: <span>0</span></p>
+    </section>
+
+
+  </main>
 </body>
 
 </html>
