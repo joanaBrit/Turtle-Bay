@@ -32,8 +32,9 @@ body {
   border: 1px solid rgba(5, 32, 71, 0.9);
   display: inline-block;
 }
+
 .cell.firstrow {
-background-color: rgb(9, 57, 130);
+  background-color: rgb(9, 57, 130);
 }
 
 .cell.secondrow {
@@ -46,7 +47,7 @@ background-color: rgb(9, 57, 130);
 
 .cell.fourthrow {
   background-color: rgba(184, 210, 250, 0.9);
-  
+
 }
 
 .cell.fifthrow {
@@ -66,7 +67,8 @@ background-color: rgb(9, 57, 130);
 }
 
 .cell.ninthrow {
-  background-color: rgb(218, 185, 114);;
+  background-color: rgb(218, 185, 114);
+  ;
 }
 
 .cell.tenthrow {
@@ -112,4 +114,10 @@ background-color: rgb(9, 57, 130);
   background-size: contain;
   /* filter: blur(0.7px); */
   background-repeat: no-repeat;
+}
+
+#lives img {
+  max-width: 30px;
+  height: auto;
+  padding: 0px 2px;
 }

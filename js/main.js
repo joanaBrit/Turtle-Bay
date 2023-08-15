@@ -61,7 +61,7 @@ function generateGrid() {
     cell.dataset.index = i
     grid.append(cell)
     cells.push(cell)
-
+    //to style every row in CSS
     if (i <= 10) {
       cell.classList.add('firstrow')
     } else if (i <= 21) {
@@ -107,30 +107,58 @@ generateGrid()
 //?Game Functionality
 
 //*Elements
+// start button
+const startBtn = document.querySelector('.start')
+//restart button
+const restartBtn = document.querySelector('.restart')
+//lives display
+const livesDisplay = document.getElementById('lives')
+//scpre
+const scoreDisplay = document.getElementById('score')
 
-
-
+console.log(startBtn)
+console.log(restartBtn)
+console.log(livesDisplay)
+console.log(scoreDisplay)
 
 // variables
-let score = 0
 let interval
+//score - start at 0, incremented by 150
+let score = 0
+// lives - start at 3, decrease to 0
 let lives = 3
+
+
 //*Executions
+
+// ! Function start game
+
+function startGame() {
+  
+  // when startBtn is clicked animals start moving
+  // when startBtn is clicked start the backgroup music
+  // if the Turtle hits an animal loses a live
+  // if lives hit 0, end of the game
+  // when the game ends, appear the window display GAME OVER and the button restart
+  // when is game over background sound stops
+
+  console.log('start game')
+}
+
 
 //? Turtle
 
-//!add turtle 
+//add turtle 
 function addTurtle(position) {
   cells[position].classList.add('turtle')
 }
-
 
 //remove turtle
 function removeTurtle() {
   cells[currentTurtlePosition].classList.remove('turtle')
 }
 
-
+//function move turtle in the grid
 function moveTurtle(event) {
 
   const key = event.keyCode
@@ -159,12 +187,12 @@ function moveTurtle(event) {
   }
   //add turtle to new position
   addTurtle(currentTurtlePosition)
-
 }
+
 
 //? Animals
 
-//!add crab
+//add crab
 function addCrab(position) {
   cells[position].classList.add('crab')
 }
@@ -180,24 +208,22 @@ function moveCrab() {
   currentCrabPosition.forEach((position, i) => {
     // remove crab at this position
     removeCrab(position)
-    // calculate new crab positions, moving just in the same row
+    // calculate new crab positions, moving in the same row
     let newPosition = position === 87 ? 77 : position + 1
     currentCrabPosition[i] = newPosition
     // add new crabs at the updated currentCrabPosition
     addCrab(newPosition)
   })
-
 }
 // setInterval(moveCrab, 1000)
 // set speed
 // clearInterval(interval)
 
 
-//!add seagull
+//add seagull
 function addSeagull(position) {
   cells[position].classList.add('seagull')
 }
-
 //remove seagull
 function removeSeagull(position) {
   cells[position].classList.remove('seagull')
@@ -212,21 +238,18 @@ function moveSeagull() {
     //calculate new seagull positions, moving in the same row
     let newPosition = position === 44 ? 54 : position - 1
     currentSegullPosition[i] = newPosition
-    // add seagulls to the new position
+    // add seagulls at the updated currentCrabPosition
     addSeagull(newPosition)
-  }
-
-  )
+  })
 }
 // setInterval(moveSeagull, 1000)
 //set speed
 // clearInterval
 
-//!add shark left to right
+//add shark left 
 function addSharkL(position) {
   cells[position].classList.add('sharkleft')
 }
-
 //remove shark left
 function removeSharkL(position) {
   cells[position].classList.remove('sharkleft')
@@ -240,7 +263,7 @@ function moveSharkL() {
     //calculate new shark positions, moving in the same row
     let newPosition = position === 32 ? 22 : position + 1
     currentSharkLPosition[i] = newPosition
-    // add sharks to the new position
+    // add sharks at the updated currentCrabPosition
     addSharkL(newPosition)
   })
 }
@@ -249,11 +272,11 @@ function moveSharkL() {
 // set speed
 // clearInterval()
 
-//!add shark right to left
+//add shark right
 function addSharkR(position) {
   cells[position].classList.add('sharkright')
 }
-//remove shark left
+//remove shark right
 function removeSharkR(position) {
   cells[position].classList.remove('sharkright')
 }
@@ -263,11 +286,10 @@ function moveSharkR() {
   currentSharkRPosition.forEach((position, i) => {
     //remove shark at this position
     removeSharkR(position)
-    //calculate new shark positions, moving in the up row and down
+    //calculate new shark positions, moving in 2 rows
     let newPosition = position === 11 ? 10 : position - 1 && position === 0 ? 21 : position - 1
-
     currentSharkRPosition[i] = newPosition
-    // add sharks to the new position
+    // add sharks at the updated currentCrabPosition
     addSharkR(newPosition)
   })
 }
@@ -276,13 +298,16 @@ function moveSharkR() {
 //set speed
 // clearInterval
 
+
 //*Events
-// keyup triggers once
-// keydown triggers infinitely if key is held down
+// click start button
+startBtn.addEventListener('click', startGame)
 
-//Keypress event to move the turtle
+// click restart button, when you lose
+restartBtn.addEventListener('click', startGame)
+
+//Keypress event to move the turtle / keyup triggers once
 document.addEventListener('keyup', moveTurtle)
-
 
 
 //! chalange
