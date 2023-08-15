@@ -109,21 +109,20 @@ generateGrid()
 //*Elements
 // start button
 const startBtn = document.querySelector('.start')
-//restart button
+// audio
+const audioBackground = document.querySelector('.background-audio')
+const audio = document.querySelector('.seagles-audio')
+// restart button
 const restartBtn = document.querySelector('.restart')
-//lives display
+// lives display
 const livesDisplay = document.getElementById('lives')
-//scpre
+// scpre
 const scoreDisplay = document.getElementById('score')
 
-console.log(startBtn)
-console.log(restartBtn)
-console.log(livesDisplay)
-console.log(scoreDisplay)
 
 // variables
 let interval
-//score - start at 0, incremented by 150
+// score - start at 0, incremented by 150
 let score = 0
 // lives - start at 3, decrease to 0
 let lives = 3
@@ -134,31 +133,87 @@ let lives = 3
 // ! Function start game
 
 function startGame() {
-  
+  // reset variables
+  resetGame()
+  // add turtle
+  addTurtle(startTurtle)
+  // add animals
+  moveCrab()
+  moveSeagull()
+  moveSharkL()
+  moveSharkR()
+
+  // set an interval
+  timer = setInterval(() => {
+    // if the Turtle hits an animal loses a live
+    if (currentCrabPosition.classList.contains('turtle')) {
+      // remove a live
+      lives--
+      // update liveDisplay
+      livesDisplay.innerHTML = lives ? '#lives'.repeat(lives) : ''
+
+    }
+
+    // add Turtle
+    removeTurtle()
+
+    // add turtle to start position 
+    addTurtle(currentTurtlePosition)
+
+    // if lifes hit 0
+    if (lives === 0) {
+      endGame()
+    }
+  }, 1000)
   // when startBtn is clicked animals start moving
   // when startBtn is clicked start the backgroup music
-  // if the Turtle hits an animal loses a live
+
   // if lives hit 0, end of the game
   // when the game ends, appear the window display GAME OVER and the button restart
   // when is game over background sound stops
-
-  console.log('start game')
 }
+
+function endGame() {
+  // clear interval
+  clearInterval(interval)
+
+  removeTurtle()
+  // when the game ends, widown display Game Over, final score
+  //     setTimeout(() => {
+  // window.(score)
+  //     }, 20)
+}
+
+function resetGame() {
+  // clear interval
+  clearInterval(interval)
+  // set the socre back to 0
+  score = 0
+  // update the scoreDisplay
+  scoreDisplay.innerHTML = score
+  // update the livesDisplay
+  livesDisplay.innerHTML = `<img src="assets/turtle.png"><img src="assets/turtle.png"><img src="assets/turtle.png">`
+  removeTurtle()
+  addTurtle(startTurtle)
+}
+
+console.log('start game')
+
 
 
 //? Turtle
 
-//add turtle 
+// add turtle 
 function addTurtle(position) {
   cells[position].classList.add('turtle')
 }
 
-//remove turtle
+// remove turtle
 function removeTurtle() {
   cells[currentTurtlePosition].classList.remove('turtle')
 }
 
-//function move turtle in the grid
+// function move turtle in the grid
 function moveTurtle(event) {
 
   const key = event.keyCode
@@ -298,11 +353,21 @@ function moveSharkR() {
 //set speed
 // clearInterval
 
+function playAudio() {
+  // background sound
+  audioBackground.setAttribute('src', 'https://freesound.org/people/Timbre/sounds/563349/')
+  //  seagulls
+  audio.setAttribute('src', 'https://freesound.org/people/squashy555/sounds/353416/')
+// play audio
+audio.play()
+audioBackground.play()
+}
+
 
 //*Events
 // click start button
 startBtn.addEventListener('click', startGame)
-
+startBtn.addEventListener('click', playAudio)
 // click restart button, when you lose
 restartBtn.addEventListener('click', startGame)
 
