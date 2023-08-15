@@ -33,8 +33,8 @@ let startCrabPosition = [89, 92, 95, 98]
 let currentCrabPosition = [89, 92, 95, 98]
 
 //seagull variables
-let startSeagullPosition = [55, 58, 60, 62, 65]
-let currentSegullPosition = [55, 58, 60, 62, 65]
+let startSeagullPosition = [55, 57, 60, 63, 65]
+let currentSegullPosition = [55, 57, 60, 63, 65]
 
 //shark variables
 
@@ -87,7 +87,7 @@ function generateGrid() {
     }
   }
 
-  addTurtle(115)
+  updateTurtlePosition(115)
 
   startCrabPosition.forEach(index => addCrab(index))
 
@@ -110,8 +110,8 @@ generateGrid()
 // start button
 const startBtn = document.querySelector('.start')
 // audio
-const audioBackground = document.querySelector('.background-audio')
-const audio = document.querySelector('.seagles-audio')
+const audioBackground = document.querySelector('.background')
+const audio = document.querySelector('.seagles')
 // restart button
 const restartBtn = document.querySelector('.restart')
 // lives display
@@ -136,52 +136,104 @@ function startGame() {
   // reset variables
   resetGame()
   // add turtle
-  addTurtle(startTurtle)
-  // add animals
-  moveCrab()
-  moveSeagull()
-  moveSharkL()
-  moveSharkR()
+  updateTurtlePosition(startTurtle)
+
+  setInterval(() => {
+    // move animals every 1 sec
+    moveCrab()
+    moveSeagull()
+    moveSharkL()
+    moveSharkR()
+    checkIfTurtleHitSomething()
+  }, 1000)
 
   // set an interval
   timer = setInterval(() => {
     // if the Turtle hits an animal loses a live
-    if (currentCrabPosition.classList.contains('turtle')) {
-      // remove a live
-      lives--
-      // update liveDisplay
-      livesDisplay.innerHTML = lives ? '#lives'.repeat(lives) : ''
 
-    }
-
-    // add Turtle
-    removeTurtle()
-
-    // add turtle to start position 
-    addTurtle(currentTurtlePosition)
-
-    // if lifes hit 0
-    if (lives === 0) {
-      endGame()
-    }
   }, 1000)
   // when startBtn is clicked animals start moving
   // when startBtn is clicked start the backgroup music
-
   // if lives hit 0, end of the game
   // when the game ends, appear the window display GAME OVER and the button restart
   // when is game over background sound stops
 }
 
+function updateScoreBy(amount) {
+  score = Math.max(0, score + amount)
+}
+
+function checkIfTurtleHitSomething() {
+  console.log('Checking now if the turtle hit something')
+  // Check if turtle current position has an animal
+  if (currentCrabPosition.includes(currentTurtlePosition)) {
+    console.log('Crab in same tile as turtle')
+    // remove a live
+    lives--
+    // update liveDisplay
+    livesDisplay.innerHTML = '<img src="assets/turtle.png">'.repeat(lives)
+    updateTurtlePosition(startTurtle)
+    // Update score
+    updateScoreBy(-150)
+    scoreDisplay.innerHTML = score
+  } else if (currentSegullPosition.includes(currentTurtlePosition)) {
+    // remove a live
+    lives--
+    // update liveDisplay
+    livesDisplay.innerHTML = '<img src="assets/turtle.png">'.repeat(lives)
+    updateTurtlePosition(startTurtle)
+    // Update score
+    updateScoreBy(-150)
+    scoreDisplay.innerHTML = score
+  } else if (currentSharkLPosition.includes(currentTurtlePosition)) {
+    // remove a live
+    lives--
+    // update liveDisplay
+    livesDisplay.innerHTML = '<img src="assets/turtle.png">'.repeat(lives)
+    updateTurtlePosition(startTurtle)
+    // Update score
+    updateScoreBy(-150)
+    scoreDisplay.innerHTML = score
+  } else if (currentSharkRPosition.includes(currentTurtlePosition)) {
+    // remove a live
+    lives--
+    // update liveDisplay
+    livesDisplay.innerHTML = '<img src="assets/turtle.png">'.repeat(lives)
+    updateTurtlePosition(startTurtle)
+    // Update score
+    updateScoreBy(-150)
+    scoreDisplay.innerHTML = score
+  } else {
+    updateScoreBy(150)
+    // Check if turtle is now in last row
+    // let newPosition = position === 0 ? 10 : startTurtle
+    // currentTurtlePosition[i] = newPosition
+    
+    // const isTurtleInLastRow = ;
+    if (isTurtleInLastRow) {
+      console.log('You Win!!!')
+      //! need to show the win window + total score
+    }
+  }
+
+  // if lifes hit 0
+  if (lives === 0) {
+    endGame()
+    //! Needs to show Game Over window + reset button
+  }
+  // If it does have an animal, then need to subtract life
+  // Reset turtle position, and if life is 0, end game
+}
+
+
 function endGame() {
   // clear interval
   clearInterval(interval)
-
-  removeTurtle()
+  updateTurtlePosition(startTurtle)
   // when the game ends, widown display Game Over, final score
-  //     setTimeout(() => {
-  // window.(score)
-  //     }, 20)
+  setTimeout(() => {
+    //! window.dis(score)
+  })
 }
 
 function resetGame() {
@@ -193,59 +245,55 @@ function resetGame() {
   scoreDisplay.innerHTML = score
   // update the livesDisplay
   livesDisplay.innerHTML = `<img src="assets/turtle.png"><img src="assets/turtle.png"><img src="assets/turtle.png">`
-  removeTurtle()
-  addTurtle(startTurtle)
+  updateTurtlePosition(startTurtle)
 }
 
-console.log('start game')
 
-
-
-//? Turtle
+//? Turtle / Main character
 
 // add turtle 
-function addTurtle(position) {
+function updateTurtlePosition(position) {
+  console.log('Moving turtle to position ' + position)
+  cells[currentTurtlePosition].classList.remove('turtle')
   cells[position].classList.add('turtle')
+  currentTurtlePosition = position
 }
 
-// remove turtle
-function removeTurtle() {
-  cells[currentTurtlePosition].classList.remove('turtle')
-}
 
 // function move turtle in the grid
 function moveTurtle(event) {
-
   const key = event.keyCode
   const up = 38
   const down = 40
   const right = 39
   const left = 37
 
-  //remove Turtle
-  removeTurtle()
+  let targetPosition = currentTurtlePosition
 
+  // Check what keys are pressed, and move the turtle
   if (key === up && currentTurtlePosition >= width) {
-    currentTurtlePosition -= width
+    targetPosition -= width
 
   } else if (key === down && cellCount - 1 >= currentTurtlePosition + width) {
-    currentTurtlePosition += width
+    targetPosition += width
 
   } else if (key === right && currentTurtlePosition % width !== width - 1) {
-    currentTurtlePosition++
+    targetPosition++
 
   } else if (key === left && currentTurtlePosition % width !== 0) {
-    currentTurtlePosition--
+    targetPosition--
 
   } else {
     console.log('Invalid')
   }
-  //add turtle to new position
-  addTurtle(currentTurtlePosition)
+
+  //add turtle to new position, and check if it hit something
+  updateTurtlePosition(targetPosition)
+  checkIfTurtleHitSomething()
 }
 
 
-//? Animals
+//? Animals / obstacles
 
 //add crab
 function addCrab(position) {
@@ -264,22 +312,20 @@ function moveCrab() {
     // remove crab at this position
     removeCrab(position)
     // calculate new crab positions, moving in the same row
-    let newPosition = position === 87 ? 77 : position + 1
+    let newPosition = position === 98 ? 88 : position + 1
     currentCrabPosition[i] = newPosition
     // add new crabs at the updated currentCrabPosition
     addCrab(newPosition)
   })
 }
 // setInterval(moveCrab, 1000)
-// set speed
-// clearInterval(interval)
 
 
-//add seagull
+// add seagull
 function addSeagull(position) {
   cells[position].classList.add('seagull')
 }
-//remove seagull
+// remove seagull
 function removeSeagull(position) {
   cells[position].classList.remove('seagull')
 }
@@ -291,17 +337,15 @@ function moveSeagull() {
     //remove seagull at this position
     removeSeagull(position)
     //calculate new seagull positions, moving in the same row
-    let newPosition = position === 44 ? 54 : position - 1
+    let newPosition = position === 55 ? 65 : position - 1
     currentSegullPosition[i] = newPosition
     // add seagulls at the updated currentCrabPosition
     addSeagull(newPosition)
   })
 }
 // setInterval(moveSeagull, 1000)
-//set speed
-// clearInterval
 
-//add shark left 
+// add shark left 
 function addSharkL(position) {
   cells[position].classList.add('sharkleft')
 }
@@ -316,16 +360,14 @@ function moveSharkL() {
     //remove shark at this position
     removeSharkL(position)
     //calculate new shark positions, moving in the same row
-    let newPosition = position === 32 ? 22 : position + 1
+    let newPosition = position === 43 ? 33 : position + 1
     currentSharkLPosition[i] = newPosition
     // add sharks at the updated currentCrabPosition
     addSharkL(newPosition)
   })
 }
-
 // setInterval(moveSharkL, 1000)
-// set speed
-// clearInterval()
+
 
 //add shark right
 function addSharkR(position) {
@@ -336,44 +378,44 @@ function removeSharkR(position) {
   cells[position].classList.remove('sharkright')
 }
 
+
 //function move sharks right to the left
 function moveSharkR() {
   currentSharkRPosition.forEach((position, i) => {
     //remove shark at this position
     removeSharkR(position)
     //calculate new shark positions, moving in 2 rows
-    let newPosition = position === 11 ? 10 : position - 1 && position === 0 ? 21 : position - 1
+    let newPosition = position === 22 ? 21 : position - 1 && position === 11 ? 32 : position - 1
     currentSharkRPosition[i] = newPosition
     // add sharks at the updated currentCrabPosition
     addSharkR(newPosition)
   })
 }
-
 // setInterval(moveSharkR, 1000)
-//set speed
-// clearInterval
+
 
 function playAudio() {
   // background sound
-  audioBackground.setAttribute('src', 'https://freesound.org/people/Timbre/sounds/563349/')
-  //  seagulls
-  audio.setAttribute('src', 'https://freesound.org/people/squashy555/sounds/353416/')
-// play audio
-audio.play()
-audioBackground.play()
+  audioBackground.setAttribute('src', 'sounds/624874__sonically_sound__retro-funk-20032022-1714.mp3')
+  // seagulls
+  audio.setAttribute('src', 'sounds/353416__squashy555__seagull-on-beach.mp3')
+  // play audio
+  audio.play()
+  audioBackground.play()
 }
 
 
 //*Events
+
 // click start button
 startBtn.addEventListener('click', startGame)
 startBtn.addEventListener('click', playAudio)
 // click restart button, when you lose
 restartBtn.addEventListener('click', startGame)
-
-//Keypress event to move the turtle / keyup triggers once
+restartBtn.addEventListener('click', playAudio)
+// Keypress event to move the turtle / keyup triggers once
 document.addEventListener('keyup', moveTurtle)
 
-
-//! chalange
-//move sharks !straight line
+//! chalanges
+// move sharks !straight line
+// make random wholes appear in the row 66 to 76
