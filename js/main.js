@@ -39,12 +39,12 @@ let currentSegullPosition = [55, 57, 60, 63, 65]
 //shark variables
 
 //Left
-let startSharkLPosition = [33, 34, 36, 37, 39, 40, 42, 43]
-let currentSharkLPosition = [33, 34, 36, 37, 39, 40, 42, 43]
+let startSharkLPosition = [33, 36, 37, 39, 40, 43]
+let currentSharkLPosition = [33, 36, 37, 39, 40, 43]
 
 //Right
-let startSharkRPosition = [22, 24, 26, 27, 30, 32]
-let currentSharkRPosition = [22, 24, 26, 27, 30, 32]
+let startSharkRPosition = [11, 13, 15, 17, 19, 21]
+let currentSharkRPosition = [11, 13, 15, 17, 19, 21]
 
 
 //Generate the cells
@@ -116,8 +116,10 @@ const audio = document.querySelector('.seagles')
 const restartBtn = document.querySelector('.restart')
 // lives display
 const livesDisplay = document.getElementById('lives')
-// scpre
+// score
 const scoreDisplay = document.getElementById('score')
+// total score
+const finalScore = document.getElementById('final-score')
 
 
 // variables
@@ -138,32 +140,22 @@ function startGame() {
   // add turtle
   updateTurtlePosition(startTurtle)
 
-  setInterval(() => {
+  interval = setInterval(() => {
     // move animals every 1 sec
     moveCrab()
     moveSeagull()
     moveSharkL()
     moveSharkR()
-    checkIfTurtleHitSomething()
-  }, 1000)
-
-  // set an interval
-  timer = setInterval(() => {
-    // if the Turtle hits an animal loses a live
-
-  }, 1000)
-  // when startBtn is clicked animals start moving
-  // when startBtn is clicked start the backgroup music
-  // if lives hit 0, end of the game
-  // when the game ends, appear the window display GAME OVER and the button restart
-  // when is game over background sound stops
+    checkIfTurtleHitSomething(false)
+  }, 1500)
 }
 
 function updateScoreBy(amount) {
   score = Math.max(0, score + amount)
+  // change score display on page
 }
 
-function checkIfTurtleHitSomething() {
+function checkIfTurtleHitSomething(justMadeMove) {
   console.log('Checking now if the turtle hit something')
   // Check if turtle current position has an animal
   if (currentCrabPosition.includes(currentTurtlePosition)) {
@@ -204,35 +196,35 @@ function checkIfTurtleHitSomething() {
     updateScoreBy(-150)
     scoreDisplay.innerHTML = score
   } else {
-    updateScoreBy(150)
-    // Check if turtle is now in last row
-    // let newPosition = position === 0 ? 10 : startTurtle
-    // currentTurtlePosition[i] = newPosition
+    if (justMadeMove) {
+      updateScoreBy(150)
+    }
     
-    // const isTurtleInLastRow = ;
-    if (isTurtleInLastRow) {
+    if (currentTurtlePosition <= 11) {
       console.log('You Win!!!')
+
+      endGame()
       //! need to show the win window + total score
+      finalScore.innerHTML = score
     }
   }
 
   // if lifes hit 0
   if (lives === 0) {
     endGame()
-    //! Needs to show Game Over window + reset button
   }
-  // If it does have an animal, then need to subtract life
-  // Reset turtle position, and if life is 0, end game
 }
 
 
 function endGame() {
+  console.log('Game Over')
   // clear interval
   clearInterval(interval)
-  updateTurtlePosition(startTurtle)
+  removeTurtle()
   // when the game ends, widown display Game Over, final score
   setTimeout(() => {
     //! window.dis(score)
+    //! Needs to show Game Over window + reset button
   })
 }
 
@@ -244,6 +236,7 @@ function resetGame() {
   // update the scoreDisplay
   scoreDisplay.innerHTML = score
   // update the livesDisplay
+  lives = 3
   livesDisplay.innerHTML = `<img src="assets/turtle.png"><img src="assets/turtle.png"><img src="assets/turtle.png">`
   updateTurtlePosition(startTurtle)
 }
@@ -257,6 +250,10 @@ function updateTurtlePosition(position) {
   cells[currentTurtlePosition].classList.remove('turtle')
   cells[position].classList.add('turtle')
   currentTurtlePosition = position
+}
+
+function removeTurtle() {
+  cells[currentTurtlePosition].classList.remove('turtle')
 }
 
 
@@ -289,7 +286,7 @@ function moveTurtle(event) {
 
   //add turtle to new position, and check if it hit something
   updateTurtlePosition(targetPosition)
-  checkIfTurtleHitSomething()
+  checkIfTurtleHitSomething(true)
 }
 
 
@@ -318,7 +315,7 @@ function moveCrab() {
     addCrab(newPosition)
   })
 }
-// setInterval(moveCrab, 1000)
+
 
 
 // add seagull
@@ -341,9 +338,10 @@ function moveSeagull() {
     currentSegullPosition[i] = newPosition
     // add seagulls at the updated currentCrabPosition
     addSeagull(newPosition)
+    
   })
 }
-// setInterval(moveSeagull, 1000)
+
 
 // add shark left 
 function addSharkL(position) {
@@ -366,7 +364,7 @@ function moveSharkL() {
     addSharkL(newPosition)
   })
 }
-// setInterval(moveSharkL, 1000)
+
 
 
 //add shark right
@@ -385,13 +383,13 @@ function moveSharkR() {
     //remove shark at this position
     removeSharkR(position)
     //calculate new shark positions, moving in 2 rows
-    let newPosition = position === 22 ? 21 : position - 1 && position === 11 ? 32 : position - 1
+    let newPosition = position === 11 ? 32 : position - 1 && position === 22 ? 21 : position - 1
     currentSharkRPosition[i] = newPosition
     // add sharks at the updated currentCrabPosition
     addSharkR(newPosition)
   })
 }
-// setInterval(moveSharkR, 1000)
+
 
 
 function playAudio() {
