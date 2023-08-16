@@ -118,6 +118,14 @@ const livesDisplay = document.getElementById('lives')
 const scoreDisplay = document.getElementById('score')
 // total score
 const finalScore = document.getElementById('final-score')
+// start window display
+const startWindow = document.querySelector('.controls')
+// Game Over window display
+const losesWindow = document.querySelector('.loses')
+// Win window display
+const winsWindow = document.querySelector('.wins')
+
+
 
 
 // variables
@@ -197,12 +205,10 @@ function checkIfTurtleHitSomething(justMadeMove) {
     if (justMadeMove) {
       updateScoreBy(150)
     }
-    
+
     if (currentTurtlePosition <= 11) {
       console.log('You Win!!!')
-
       endGame()
-      //! need to show the win window + total score
       finalScore.innerHTML = score
     }
   }
@@ -210,19 +216,18 @@ function checkIfTurtleHitSomething(justMadeMove) {
   // if lifes hit 0
   if (lives === 0) {
     endGame()
+    console.log('Game Over')
   }
 }
 
 
 function endGame() {
-  console.log('Game Over')
   // clear interval
   clearInterval(interval)
   removeTurtle()
-  // when the game ends, widown display Game Over, final score
+
   setTimeout(() => {
-    //! window.dis(score)
-    //! Needs to show Game Over window + reset button
+
   })
 }
 
@@ -336,7 +341,7 @@ function moveSeagull() {
     currentSegullPosition[i] = newPosition
     // add seagulls at the updated currentCrabPosition
     addSeagull(newPosition)
-    
+
   })
 }
 
@@ -406,6 +411,7 @@ function playAudio() {
 // click start button
 startBtn.addEventListener('click', startGame)
 startBtn.addEventListener('click', playAudio)
+
 // click restart button, when you lose
 restartBtn.addEventListener('click', startGame)
 restartBtn.addEventListener('click', playAudio)
@@ -415,3 +421,18 @@ document.addEventListener('keyup', moveTurtle)
 //! chalanges
 // move sharks !straight line
 // make random wholes appear in the row 66 to 76
+
+
+// Find the div that is the window
+// Set the div.style = "display: none" if want to hide, or set to "" if want to show.
+// when the game ends, widown display Game Over, final score
+// start window display
+startWindow.style.display = 'hidden'
+startWindow.style.display = 'visible'
+// Game Over window display
+losesWindow.style.display = 'hidden'
+losesWindow.style.display = 'visible'
+// Win window display
+winsWindow.style.display = 'hidden'
+winsWindow.style.display = 'visible'
+
