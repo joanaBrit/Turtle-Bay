@@ -1,6 +1,6 @@
 // ? GRID CREATION
 
-//Board Elements
+// Board Elements
 const grid = document.querySelector('#grid')
 
 //how to put the grid as an array to use
@@ -17,37 +17,35 @@ const grid = document.querySelector('#grid')
 // [null, null, null, null, null, null, null, null, null, null, null], \
 // [null, null, null, null, null, 'turtle', null, null, null, null, null]]
 
-//Board Variables
+// Board Variables
 const width = 11
 const cellCount = width * width
 const cells = []
 
-//Turtle variables
+// turtle variables
 let startTurtle = 115
 let currentTurtlePosition = 115
 
-//Animals position
+// Animals position
 
-//crab variables
-let startCrabPosition = [89, 92, 95, 98]
-let currentCrabPosition = [89, 92, 95, 98]
+// crab variables
+let startCrabPosition = [89, 92, 94, 97]
+let currentCrabPosition = [89, 92, 94, 97]
 
 //seagull variables
 let startSeagullPosition = [55, 57, 60, 63, 65]
 let currentSegullPosition = [55, 57, 60, 63, 65]
 
-//shark variables
+// octopus variables
+let startOctopusPosition = [33, 35, 37, 38, 39, 41, 43]
+let currentOctopusPosition = [33, 35, 37, 38, 39, 41, 43]
 
-//Left
-let startSharkLPosition = [33, 36, 37, 39, 40, 43]
-let currentSharkLPosition = [33, 36, 37, 39, 40, 43]
-
-//Right
-let startSharkRPosition = [11, 13, 15, 17, 19, 21]
-let currentSharkRPosition = [11, 13, 15, 17, 19, 21]
+// shark variables
+let startSharkPosition = [11, 13, 15, 17, 19, 21]
+let currentSharkPosition = [11, 13, 15, 17, 19, 21]
 
 
-//Generate the cells
+// Generate the cells
 function generateGrid() {
   grid.innerHTML = ''
 
@@ -57,7 +55,7 @@ function generateGrid() {
     cell.style.width = `${100 / width}%`
     cell.style.height = `${100 / width}%`
     //!remove this later
-    cell.innerHTML = i
+    // cell.innerHTML = i
     cell.dataset.index = i
     grid.append(cell)
     cells.push(cell)
@@ -93,9 +91,9 @@ function generateGrid() {
 
   startSeagullPosition.forEach(index => addSeagull(index))
 
-  startSharkLPosition.forEach(index => addSharkL(index))
+  startOctopusPosition.forEach(index => addOctopus(index))
 
-  startSharkRPosition.forEach(index => addSharkR(index))
+  startSharkPosition.forEach(index => addShark(index))
 
 }
 
@@ -144,10 +142,10 @@ function startGame() {
     // move animals every 1 sec
     moveCrab()
     moveSeagull()
-    moveSharkL()
-    moveSharkR()
+    moveOctopus()
+    moveShark()
     checkIfTurtleHitSomething(false)
-  }, 1500)
+  }, 1200)
 }
 
 function updateScoreBy(amount) {
@@ -177,7 +175,7 @@ function checkIfTurtleHitSomething(justMadeMove) {
     // Update score
     updateScoreBy(-150)
     scoreDisplay.innerHTML = score
-  } else if (currentSharkLPosition.includes(currentTurtlePosition)) {
+  } else if (currentOctopusPosition.includes(currentTurtlePosition)) {
     // remove a live
     lives--
     // update liveDisplay
@@ -186,7 +184,7 @@ function checkIfTurtleHitSomething(justMadeMove) {
     // Update score
     updateScoreBy(-150)
     scoreDisplay.innerHTML = score
-  } else if (currentSharkRPosition.includes(currentTurtlePosition)) {
+  } else if (currentSharkPosition.includes(currentTurtlePosition)) {
     // remove a live
     lives--
     // update liveDisplay
@@ -343,50 +341,50 @@ function moveSeagull() {
 }
 
 
-// add shark left 
-function addSharkL(position) {
-  cells[position].classList.add('sharkleft')
+// add Octopus 
+function addOctopus(position) {
+  cells[position].classList.add('octopus')
 }
-//remove shark left
-function removeSharkL(position) {
-  cells[position].classList.remove('sharkleft')
+//remove Octopus
+function removeOctopus(position) {
+  cells[position].classList.remove('octopus')
 }
 
-//function move sharks left to the right
-function moveSharkL() {
-  currentSharkLPosition.forEach((position, i) => {
-    //remove shark at this position
-    removeSharkL(position)
-    //calculate new shark positions, moving in the same row
+//function move octopus left to the right
+function moveOctopus() {
+  currentOctopusPosition.forEach((position, i) => {
+    //remove octopus at this position
+    removeOctopus(position)
+    //calculate new octopus positions, moving in the same row
     let newPosition = position === 43 ? 33 : position + 1
-    currentSharkLPosition[i] = newPosition
-    // add sharks at the updated currentCrabPosition
-    addSharkL(newPosition)
+    currentOctopusPosition[i] = newPosition
+    // add octopus at the updated currentCrabPosition
+    addOctopus(newPosition)
   })
 }
 
 
 
 //add shark right
-function addSharkR(position) {
-  cells[position].classList.add('sharkright')
+function addShark(position) {
+  cells[position].classList.add('shark')
 }
 //remove shark right
-function removeSharkR(position) {
-  cells[position].classList.remove('sharkright')
+function removeShark(position) {
+  cells[position].classList.remove('shark')
 }
 
 
 //function move sharks right to the left
-function moveSharkR() {
-  currentSharkRPosition.forEach((position, i) => {
+function moveShark() {
+  currentSharkPosition.forEach((position, i) => {
     //remove shark at this position
-    removeSharkR(position)
+    removeShark(position)
     //calculate new shark positions, moving in 2 rows
     let newPosition = position === 11 ? 32 : position - 1 && position === 22 ? 21 : position - 1
-    currentSharkRPosition[i] = newPosition
+    currentSharkPosition[i] = newPosition
     // add sharks at the updated currentCrabPosition
-    addSharkR(newPosition)
+    addShark(newPosition)
   })
 }
 

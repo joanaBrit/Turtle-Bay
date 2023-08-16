@@ -10,11 +10,14 @@ h1 {
 }
 
 body {
-  margin: 0
+  margin: 0;
+  background-image: url('../assets/cristian-palmer-XexawgzYOBc-unsplash.jpg');
+  background-size: cover;
 }
 
 #grid-wrapper {
   min-height: 100vh;
+  text-align: center;
 }
 
 #grid {
@@ -24,6 +27,77 @@ body {
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
+}
+
+
+#instructions {
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 0;
+  width: 0;
+  width: fit-content;
+}
+
+#instructions .controls {
+  display: flex;
+    background: white;
+    padding: 1rem;
+    border-radius: 5px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    
+}
+
+#controls-wrapper {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-evenly;
+  color: white;
+}
+
+.turtle {
+  background-image: url('../assets/turtle.png');
+  background-size: 65%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.crab {
+  background-image: url('../assets/crab.png');
+  background-size: 75%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+.seagull {
+  background-image: url('../assets/seagull.png');
+  background-size: contain;
+  background-position: bottom;
+  background-repeat: no-repeat;
+}
+
+.octopus {
+  background-image: url('../assets/octopus\ .png');
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.shark {
+  background-image: url('../assets/shark.png');
+  background-size: 65%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#lives img {
+  max-width: 30px;
+  height: auto;
+  padding: 0px 2px;
 }
 
 .cell {
@@ -77,44 +151,3 @@ body {
   /* background-image: linear-gradient(to bottom, rgb(212, 175, 94), rgb(12 96 34 / 81%)); */
 }
 
-.turtle {
-  background-image: url('../assets/turtle.png');
-  background-size: 80%;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.crab {
-  background-image: url('../assets/crab.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-
-.seagull {
-  background-image: url('../assets/seagull.png');
-  background-size: contain;
-  background-position: bottom;
-  background-repeat: no-repeat;
-}
-
-.sharkleft {
-  background-image: url('../assets/octopus\ .png');
-  background-size: 70%;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.sharkright {
-  background-image: url('../assets/shark.png');
-  background-size: contain;
-  /* filter: blur(0.7px); */
-  background-repeat: no-repeat;
-}
-
-#lives img {
-  display: flex;
-  max-width: 30px;
-  height: auto;
-  padding: 0px 2px;
-}
