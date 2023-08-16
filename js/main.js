@@ -34,7 +34,7 @@ let currentCrabPosition = [89, 92, 94, 97]
 
 //seagull variables
 let startSeagullPosition = [55, 57, 60, 63, 65]
-let currentSegullPosition = [55, 57, 60, 63, 65]
+let currentSeagullPosition = [55, 57, 60, 63, 65]
 
 // octopus variables
 let startOctopusPosition = [33, 35, 37, 38, 39, 41, 43]
@@ -129,7 +129,7 @@ const winsWindow = document.querySelector('.wins')
 
 
 // variables
-let interval
+let intervals = []
 // score - start at 0, incremented by 150
 let score = 0
 // lives - start at 3, decrease to 0
@@ -146,14 +146,23 @@ function startGame() {
   // add turtle
   updateTurtlePosition(startTurtle)
 
-  interval = setInterval(() => {
+  intervals.push(setInterval(() => {
     // move animals every 1 sec
     moveCrab()
     moveSeagull()
     moveOctopus()
     moveShark()
     checkIfTurtleHitSomething(false)
-  }, 1200)
+  }, 1200))
+
+  intervals.push(setInterval(() => {
+    // move animals every 1 sec
+    moveShark()
+    checkIfTurtleHitSomething(false)
+  }, 600))
+
+  // Hide the start game overlay window
+  startWindow.style.setProperty('display', 'none')
 }
 
 function updateScoreBy(amount) {
@@ -174,7 +183,7 @@ function checkIfTurtleHitSomething(justMadeMove) {
     // Update score
     updateScoreBy(-150)
     scoreDisplay.innerHTML = score
-  } else if (currentSegullPosition.includes(currentTurtlePosition)) {
+  } else if (currentSeagullPosition.includes(currentTurtlePosition)) {
     // remove a live
     lives--
     // update liveDisplay
@@ -209,6 +218,7 @@ function checkIfTurtleHitSomething(justMadeMove) {
     if (currentTurtlePosition <= 11) {
       console.log('You Win!!!')
       endGame()
+      showWindow('win')
       finalScore.innerHTML = score
     }
   }
@@ -216,14 +226,25 @@ function checkIfTurtleHitSomething(justMadeMove) {
   // if lifes hit 0
   if (lives === 0) {
     endGame()
+    showWindow('lose')
     console.log('Game Over')
+  }
+}
+
+function showWindow(type) {
+  if (type === 'win') {
+    // Show the win window
+    winsWindow.style.removeProperty('display')
+  } else {
+    // Show the lose window
+    losesWindow.style.removeProperty('display')
   }
 }
 
 
 function endGame() {
   // clear interval
-  clearInterval(interval)
+  intervals.forEach(interval => clearInterval(interval))
   removeTurtle()
 
   setTimeout(() => {
@@ -233,7 +254,7 @@ function endGame() {
 
 function resetGame() {
   // clear interval
-  clearInterval(interval)
+  intervals.forEach(interval => clearInterval(interval))
   // set the socre back to 0
   score = 0
   // update the scoreDisplay
@@ -242,6 +263,10 @@ function resetGame() {
   lives = 3
   livesDisplay.innerHTML = `<img src="assets/turtle.png"><img src="assets/turtle.png"><img src="assets/turtle.png">`
   updateTurtlePosition(startTurtle)
+
+  // Set both wins and loses window to have display: none in style
+  losesWindow.style.setProperty('display', 'none')
+  winsWindow.style.setProperty('display', 'none')
 }
 
 
@@ -333,16 +358,23 @@ function removeSeagull(position) {
 // function move seagull right to the left
 function moveSeagull() {
   console.log('Move seagull')
-  currentSegullPosition.forEach((position, i) => {
-    //remove seagull at this position
-    removeSeagull(position)
-    //calculate new seagull positions, moving in the same row
-    let newPosition = position === 55 ? 65 : position - 1
-    currentSegullPosition[i] = newPosition
-    // add seagulls at the updated currentCrabPosition
-    addSeagull(newPosition)
 
+  // Remove seagulls from all cells in the sixth row
+  let sixthRowCells = document.querySelectorAll('.sixthrow')
+  sixthRowCells.forEach(cell => {
+    cell.classList.remove('seagull')
   })
+
+  // Get new positions for the seagulls into an array
+  const newPositions = []
+  currentSeagullPosition.forEach((position, i) => {
+    newPositions.push(position === 55 ? 65 : position - 1)
+  })
+
+  // Add a seagull at each new position
+  newPositions.forEach(position => addSeagull(position))
+
+  currentSeagullPosition = newPositions
 }
 
 
@@ -423,16 +455,16 @@ document.addEventListener('keyup', moveTurtle)
 // make random wholes appear in the row 66 to 76
 
 
-// Find the div that is the window
-// Set the div.style = "display: none" if want to hide, or set to "" if want to show.
-// when the game ends, widown display Game Over, final score
-// start window display
-startWindow.style.display = 'hidden'
-startWindow.style.display = 'visible'
-// Game Over window display
-losesWindow.style.display = 'hidden'
-losesWindow.style.display = 'visible'
-// Win window display
-winsWindow.style.display = 'hidden'
-winsWindow.style.display = 'visible'
+// // Find the div that is the window
+// // Set the div.style = "display: none" if want to hide, or set to "" if want to show.
+// // when the game ends, widown display Game Over, final score
+// // start window display
+// startWindow.style.display = 'hidden'
+// startWindow.style.display = 'visible'
+// // Game Over window display
+// losesWindow.style.display = 'hidden'
+// losesWindow.style.display = 'visible'
+// // Win window display
+// winsWindow.style.display = 'hidden'
+// winsWindow.style.display = 'visible'
 

@@ -11,13 +11,16 @@ h1 {
 
 body {
   margin: 0;
-  background-image: url('../assets/sea\ .png');
+  background-image: url('../assets/sea\ 1.png');
   background-size: cover;
   background-position: center;
+  max-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  backdrop-filter: blur(2px);
 }
 
 #grid-wrapper {
-  min-height: 100vh;
   text-align: center;
 }
 
@@ -48,16 +51,17 @@ body {
   background: rgba(255, 255, 255, 0.8);
   padding: 1rem;
   border-radius: 10px;
-  min-width: 30vw;
+  min-width: 40vw;
   width: fit-content;
   align-items: center;
-  justify-content: space-evenly;
   flex-wrap: wrap;
   flex-direction: row;
+  justify-content: center;
 }
 
 
-#instruction, .loses, .wins {
+#instructions .loses,
+#instructions .wins {
   display: flex;
   background: rgba(255, 255, 255, 0.8);
   padding: 1rem;
@@ -67,7 +71,6 @@ body {
   align-items: center;
   flex-wrap: wrap;
   flex-direction: column;
-  display: none;
 }
 
 .controls img {
@@ -77,27 +80,31 @@ body {
   margin: 10px;
 }
 
-.end-game .loses, .wins:nth-of-type(p) {
+.end-game .loses,
+.end-game .wins p:first-child{
   text-transform: uppercase;
   font-size: 20px;
   font-weight: bold;
 }
 
-#button .start, .restart {
+#button .start,
+#button .restart {
   margin: 10px;
   background-color: transparent;
   border: 2px solid rgba(184, 210, 250, 0.9);
   border-radius: 50% 70%;
   color: rgb(9, 57, 130);
   padding: 15px;
-  
+  font-weight: bold;
+
 }
 
 #controls-wrapper {
   display: flex;
-  align-items: stretch;
   justify-content: space-evenly;
   color: white;
+  flex-direction: row;
+  align-items: center;
 }
 
 #lives img {
