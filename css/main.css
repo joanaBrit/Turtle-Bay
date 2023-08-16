@@ -15,9 +15,6 @@ body {
 
 #grid-wrapper {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 #grid {
@@ -30,7 +27,6 @@ body {
 }
 
 .cell {
-  border: 1px solid rgba(5, 32, 71, 0.9);
   display: inline-block;
 }
 
@@ -105,8 +101,6 @@ body {
 .sharkleft {
   background-image: url('../assets/shark.png');
   background-size: contain;
-  /* filter: blur(0.5px); */
-  transform: scaleX(-1);
   background-repeat: no-repeat;
 }
 
