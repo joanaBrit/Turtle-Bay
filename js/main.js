@@ -1,33 +1,35 @@
+// * TURTLE GAME INSTRUCTIONS
+// * If the turtles arrives to the last row wins
+// * If the turtle hits an animal lose a live, and 150 points
+// * when the game ends a window will appear depending if the player lost or won
+
+
+
 // ? GRID CREATION
 
 // Board Elements
 const grid = document.querySelector('#grid')
-
-//how to put the grid as an array to use
-// grid = [[null, null, null, null, null, null, null, null, null, null, null], \
-// ['shark', null, 'shark', null, 'shark', 'shark', null, null, 'shark', null, 'shark'], \
-// [null, 'shark', 'shark', null, null, 'shark', 'shark', null, 'shark', 'shark', null], \
-// [null, null, null, null, null, null, null, null, null, null, null], \
-// ['seagull', null, null, 'seagull', null, null, 'segull', null, null, 'seagull', null], \
-// [null, null, null, null, null, null, null, null, null, null, null], \
-// [null, null, null, null, null, null, null, null, null, null, null], \
-// [null, null, null, null, null, null, null, null, null, null, null], \
-// [null, null, 'crab', null, null, 'crab', null, null, 'crab', null, null], \
-// [null, null, null, null, null, null, null, null, null, null, null], \
-// [null, null, null, null, null, null, null, null, null, null, null], \
-// [null, null, null, null, null, 'turtle', null, null, null, null, null]]
 
 // Board Variables
 const width = 11
 const cellCount = width * width
 const cells = []
 
+
 // turtle variables
 let startTurtle = 115
 let currentTurtlePosition = 115
 
-// Animals position
+// variables
+let intervals = []
+// score - start at 0, incremented by 150
+let score = 0
+// lives - start at 3, decrease to 0
+let lives = 3
+// game started
+let gameStarted = false
 
+// Animals position
 // crab variables
 let startCrabPosition = [89, 92, 94, 97]
 let currentCrabPosition = [89, 92, 94, 97]
@@ -37,8 +39,8 @@ let startSeagullPosition = [55, 57, 60, 63, 65]
 let currentSeagullPosition = [55, 57, 60, 63, 65]
 
 // octopus variables
-let startOctopusPosition = [33, 35, 37, 38, 39, 41, 43]
-let currentOctopusPosition = [33, 35, 37, 38, 39, 41, 43]
+let startOctopusPosition = [34, 36, 39, 42]
+let currentOctopusPosition = [34, 36, 39, 42]
 
 // shark variables
 let startSharkPosition = [11, 13, 15, 17, 19, 21]
@@ -54,8 +56,6 @@ function generateGrid() {
     cell.classList.add('cell')
     cell.style.width = `${100 / width}%`
     cell.style.height = `${100 / width}%`
-    //!remove this later
-    // cell.innerHTML = i
     cell.dataset.index = i
     grid.append(cell)
     cells.push(cell)
@@ -94,24 +94,23 @@ function generateGrid() {
   startOctopusPosition.forEach(index => addOctopus(index))
 
   startSharkPosition.forEach(index => addShark(index))
-
 }
-
 
 generateGrid()
 
 
 
-//?Game Functionality
+//? Game Functionality
 
 //*Elements
 // start button
 const startBtn = document.querySelector('.start')
 // audio
 const audioBackground = document.querySelector('.background')
+audioBackground.volume = 0.2
 const audio = document.querySelector('.seagles')
 // restart button
-const restartBtn = document.querySelector('.restart')
+const restartBtn = document.querySelectorAll('#restart')
 // lives display
 const livesDisplay = document.getElementById('lives')
 // score
@@ -128,30 +127,22 @@ const winsWindow = document.querySelector('.wins')
 
 
 
-// variables
-let intervals = []
-// score - start at 0, incremented by 150
-let score = 0
-// lives - start at 3, decrease to 0
-let lives = 3
-
-
 //*Executions
 
-// ! Function start game
+//? Function start game
 
 function startGame() {
   // reset variables
   resetGame()
   // add turtle
   updateTurtlePosition(startTurtle)
+  gameStarted = true
 
   intervals.push(setInterval(() => {
     // move animals every 1 sec
     moveCrab()
     moveSeagull()
     moveOctopus()
-    moveShark()
     checkIfTurtleHitSomething(false)
   }, 1200))
 
@@ -160,21 +151,17 @@ function startGame() {
     moveShark()
     checkIfTurtleHitSomething(false)
   }, 600))
-
   // Hide the start game overlay window
   startWindow.style.setProperty('display', 'none')
 }
 
 function updateScoreBy(amount) {
   score = Math.max(0, score + amount)
-  // change score display on page
 }
 
 function checkIfTurtleHitSomething(justMadeMove) {
-  console.log('Checking now if the turtle hit something')
   // Check if turtle current position has an animal
   if (currentCrabPosition.includes(currentTurtlePosition)) {
-    console.log('Crab in same tile as turtle')
     // remove a live
     lives--
     // update liveDisplay
@@ -211,12 +198,8 @@ function checkIfTurtleHitSomething(justMadeMove) {
     updateScoreBy(-150)
     scoreDisplay.innerHTML = score
   } else {
-    if (justMadeMove) {
-      updateScoreBy(150)
-    }
-
+    //  if turtle achieve the last row 
     if (currentTurtlePosition <= 11) {
-      console.log('You Win!!!')
       endGame()
       showWindow('win')
       finalScore.innerHTML = score
@@ -227,11 +210,12 @@ function checkIfTurtleHitSomething(justMadeMove) {
   if (lives === 0) {
     endGame()
     showWindow('lose')
-    console.log('Game Over')
   }
 }
 
 function showWindow(type) {
+  audioBackground.pause()
+
   if (type === 'win') {
     // Show the win window
     winsWindow.style.removeProperty('display')
@@ -246,15 +230,13 @@ function endGame() {
   // clear interval
   intervals.forEach(interval => clearInterval(interval))
   removeTurtle()
-
-  setTimeout(() => {
-
-  })
+  gameStarted = false
 }
 
 function resetGame() {
   // clear interval
   intervals.forEach(interval => clearInterval(interval))
+  removeTurtle()
   // set the socre back to 0
   score = 0
   // update the scoreDisplay
@@ -263,7 +245,6 @@ function resetGame() {
   lives = 3
   livesDisplay.innerHTML = `<img src="assets/turtle.png"><img src="assets/turtle.png"><img src="assets/turtle.png">`
   updateTurtlePosition(startTurtle)
-
   // Set both wins and loses window to have display: none in style
   losesWindow.style.setProperty('display', 'none')
   winsWindow.style.setProperty('display', 'none')
@@ -280,13 +261,15 @@ function updateTurtlePosition(position) {
   currentTurtlePosition = position
 }
 
+// remove turtle
 function removeTurtle() {
   cells[currentTurtlePosition].classList.remove('turtle')
 }
 
-
 // function move turtle in the grid
 function moveTurtle(event) {
+  if (!gameStarted) return
+
   const key = event.keyCode
   const up = 38
   const down = 40
@@ -298,10 +281,11 @@ function moveTurtle(event) {
   // Check what keys are pressed, and move the turtle
   if (key === up && currentTurtlePosition >= width) {
     targetPosition -= width
-
+    updateScoreBy(150)
+    scoreDisplay.innerHTML = score
   } else if (key === down && cellCount - 1 >= currentTurtlePosition + width) {
     targetPosition += width
-
+    
   } else if (key === right && currentTurtlePosition % width !== width - 1) {
     targetPosition++
 
@@ -309,9 +293,8 @@ function moveTurtle(event) {
     targetPosition--
 
   } else {
-    console.log('Invalid')
+    console.log('Invalid key')
   }
-
   //add turtle to new position, and check if it hit something
   updateTurtlePosition(targetPosition)
   checkIfTurtleHitSomething(true)
@@ -345,7 +328,6 @@ function moveCrab() {
 }
 
 
-
 // add seagull
 function addSeagull(position) {
   cells[position].classList.add('seagull')
@@ -358,22 +340,18 @@ function removeSeagull(position) {
 // function move seagull right to the left
 function moveSeagull() {
   console.log('Move seagull')
-
   // Remove seagulls from all cells in the sixth row
   let sixthRowCells = document.querySelectorAll('.sixthrow')
   sixthRowCells.forEach(cell => {
     cell.classList.remove('seagull')
   })
-
   // Get new positions for the seagulls into an array
   const newPositions = []
   currentSeagullPosition.forEach((position, i) => {
     newPositions.push(position === 55 ? 65 : position - 1)
   })
-
   // Add a seagull at each new position
   newPositions.forEach(position => addSeagull(position))
-
   currentSeagullPosition = newPositions
 }
 
@@ -387,7 +365,6 @@ function removeOctopus(position) {
   cells[position].classList.remove('octopus')
 }
 
-//function move octopus left to the right
 function moveOctopus() {
   currentOctopusPosition.forEach((position, i) => {
     //remove octopus at this position
@@ -401,16 +378,14 @@ function moveOctopus() {
 }
 
 
-
-//add shark right
+//add shark 
 function addShark(position) {
   cells[position].classList.add('shark')
 }
-//remove shark right
+//remove shark 
 function removeShark(position) {
   cells[position].classList.remove('shark')
 }
-
 
 //function move sharks right to the left
 function moveShark() {
@@ -424,7 +399,6 @@ function moveShark() {
     addShark(newPosition)
   })
 }
-
 
 
 function playAudio() {
@@ -443,28 +417,12 @@ function playAudio() {
 // click start button
 startBtn.addEventListener('click', startGame)
 startBtn.addEventListener('click', playAudio)
+// restart button
+restartBtn.forEach((restart) => {
+  restart.addEventListener('click', startGame)
+  restart.addEventListener('click', playAudio)
+})
 
-// click restart button, when you lose
-restartBtn.addEventListener('click', startGame)
-restartBtn.addEventListener('click', playAudio)
 // Keypress event to move the turtle / keyup triggers once
 document.addEventListener('keyup', moveTurtle)
-
-//! chalanges
-// move sharks !straight line
-// make random wholes appear in the row 66 to 76
-
-
-// // Find the div that is the window
-// // Set the div.style = "display: none" if want to hide, or set to "" if want to show.
-// // when the game ends, widown display Game Over, final score
-// // start window display
-// startWindow.style.display = 'hidden'
-// startWindow.style.display = 'visible'
-// // Game Over window display
-// losesWindow.style.display = 'hidden'
-// losesWindow.style.display = 'visible'
-// // Win window display
-// winsWindow.style.display = 'hidden'
-// winsWindow.style.display = 'visible'
 

@@ -6,7 +6,9 @@
 h1 {
   text-align: center;
   font-size: 50px;
-  color: rgb(0, 0, 51);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: -6px 5px 3px rgb(13, 48, 101);
+  letter-spacing: 0.02em;
 }
 
 body {
@@ -26,11 +28,13 @@ body {
 
 #grid {
   box-shadow: 0 0 30px 0 rgba(32, 42, 68, 0.8);
-  height: 600px;
-  width: 600px;
+  height: 400px;
+  width: 400px;
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 
@@ -48,11 +52,11 @@ body {
 
 #instructions .controls {
   display: flex;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   padding: 1rem;
   border-radius: 10px;
-  min-width: 40vw;
-  width: fit-content;
+  min-width: 326px;
+  max-width: 326px;
   align-items: center;
   flex-wrap: wrap;
   flex-direction: row;
@@ -63,7 +67,7 @@ body {
 #instructions .loses,
 #instructions .wins {
   display: flex;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   padding: 1rem;
   border-radius: 10px;
   min-width: 30vw;
@@ -80,23 +84,43 @@ body {
   margin: 10px;
 }
 
+.controls > p,
+.controls > img {
+  padding: 0.5rem 2rem 0.2rem;
+  letter-spacing: 0.02em;
+}
+
 .end-game .loses,
-.end-game .wins p:first-child{
+.end-game .wins p:first-child {
   text-transform: uppercase;
   font-size: 20px;
   font-weight: bold;
 }
 
 #button .start,
-#button .restart {
+#button #restart {
   margin: 10px;
-  background-color: transparent;
+  background-color: rgb(184 210 250 / 38%);
   border: 2px solid rgba(184, 210, 250, 0.9);
   border-radius: 50% 70%;
   color: rgb(9, 57, 130);
   padding: 15px;
   font-weight: bold;
+  animation: color-change 2s infinite;
+}
 
+@keyframes color-change {
+  0% {
+    color: rgb(11, 34, 69);
+  }
+
+  50% {
+    color: rgb(30, 87, 174);
+  }
+
+  100% {
+    color: rgb(112, 165, 245);
+  }
 }
 
 #controls-wrapper {
@@ -115,6 +139,7 @@ body {
 
 .turtle {
   background-image: url('../assets/turtle.png');
+  background-color: transparent;
   background-size: 65%;
   background-position: center;
   background-repeat: no-repeat;
@@ -123,10 +148,9 @@ body {
 .crab {
   background-image: url('../assets/crab.png');
   background-size: 75%;
-  background-position: center;
+  background-position: cover;
   background-repeat: no-repeat;
 }
-
 
 .seagull {
   background-image: url('../assets/seagull.png');
@@ -155,7 +179,7 @@ body {
 }
 
 .cell.firstrow {
-  background-color: rgb(9, 57, 130);
+  background-color: rgba(9, 57, 130, 0.9);
 }
 
 .cell.secondrow {
@@ -167,7 +191,7 @@ body {
 }
 
 .cell.fourthrow {
-  background-color: rgba(184, 210, 250, 0.9);
+  background-color: rgba(184, 210, 250, 0.85);
 
 }
 
@@ -197,6 +221,12 @@ body {
 }
 
 .cell.eleventhrow {
-  background-color: rgba(34, 110, 15, 0.85);
-  /* background-image: linear-gradient(to bottom, rgb(212, 175, 94), rgb(12 96 34 / 81%)); */
+  background-color: rgba(83, 163, 63, 0.9);
+}
+
+@media (min-width: 800px) {
+  #grid {
+    height: 600px;
+    width: 600px
+  }
 }

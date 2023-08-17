@@ -13,14 +13,14 @@
 </head>
 
 <body>
+
   <h1>Turtle Bay</h1>
   <main id="grid-wrapper">
-
     <section id="instructions">
       <div class="controls">
-        <p>It's hatching time. Help the baby turtles reach the sea</p>
+        <p>It's hatching time. Help the baby turtles reach the deep sea.</p>
         <p>Avoid the obstacles!</p>
-        <p>Controls</p>
+        <p>Controls:</p>
         <img src="assets/direction.png">
         <div id="button">
           <button class="start">Start</button>
@@ -30,39 +30,32 @@
         <div class="loses" style="display: none">
           <p>Game Over</p>
           <div id="button">
-            <button class="restart">Restart</button>
+            <button id="restart">Restart</button>
           </div>
         </div>
         <div class="wins" style="display: none">
           <p>You Win!!!</p>
           <p>Your score: <span id="final-score"></span></p>
           <div id="button">
-            <button class="restart">Restart</button>
+            <button id="restart">Restart</button>
           </div>
         </div>
-
       </div>
     </section>
-
     <section id="grid">
-
     </section>
-
     <section>
       <div id="audio">
         <audio class="seagles"></audio>
         <audio class="background"></audio>
       </div>
-
     </section>
-
     <section id="controls-wrapper">
       <p id="lives"><img src="assets/turtle.png"><img src="assets/turtle.png"><img src="assets/turtle.png"></p>
       <p>score: <span id="score">0</span></p>
     </section>
-
-
   </main>
+
 </body>
 
 </html>
