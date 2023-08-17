@@ -423,6 +423,6 @@ restartBtn.forEach((restart) => {
   restart.addEventListener('click', playAudio)
 })
 
-// Keypress event to move the turtle / keyup triggers once
-document.addEventListener('keyup', moveTurtle)
+// Keypress event to move the turtle 
+document.addEventListener('keydown', moveTurtle)
 
