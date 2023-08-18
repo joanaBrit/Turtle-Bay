@@ -150,7 +150,7 @@ function startGame() {
     // move animals every 1 sec
     moveShark()
     checkIfTurtleHitSomething(false)
-  }, 600))
+  }, 400))
   // Hide the start game overlay window
   startWindow.style.setProperty('display', 'none')
 }
@@ -159,7 +159,7 @@ function updateScoreBy(amount) {
   score = Math.max(0, score + amount)
 }
 
-function checkIfTurtleHitSomething(justMadeMove) {
+function checkIfTurtleHitSomething() {
   // Check if turtle current position has an animal
   if (currentCrabPosition.includes(currentTurtlePosition)) {
     // remove a live
@@ -255,7 +255,6 @@ function resetGame() {
 
 // add turtle 
 function updateTurtlePosition(position) {
-  console.log('Moving turtle to position ' + position)
   cells[currentTurtlePosition].classList.remove('turtle')
   cells[position].classList.add('turtle')
   currentTurtlePosition = position
@@ -315,7 +314,6 @@ function removeCrab(position) {
 
 //function move crab left to the right
 function moveCrab() {
-  console.log('Moving crab')
   currentCrabPosition.forEach((position, i) => {
     // remove crab at this position
     removeCrab(position)
@@ -339,7 +337,6 @@ function removeSeagull(position) {
 
 // function move seagull right to the left
 function moveSeagull() {
-  console.log('Move seagull')
   // Remove seagulls from all cells in the sixth row
   let sixthRowCells = document.querySelectorAll('.sixthrow')
   sixthRowCells.forEach(cell => {
