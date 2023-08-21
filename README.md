@@ -83,14 +83,14 @@ I've tried to change the seagull position and it worked when I only used a maxim
 ![Buttons style](<readmeimg/CSS button.png>)
 
 
-## Start Page
+## Start Game
 
 ![Start overlay](<readmeimg/Start  overlay.png>)
 
 * Start overlay with the instructions and a start button.
 
 
-## Start Game page
+## Game In Progress
 
 ![Game in progress](<readmeimg/game in progress.png>)
 
