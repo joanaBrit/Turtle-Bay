@@ -138,4 +138,10 @@ I've tried to change the seagull position and it worked when I only used a maxim
 
 ## Bugs
 
+<<<<<<< HEAD
 * No obvious bugs, but there are still some things I want to improve.
+=======
+* No obvious bugs, but there are still some things I want to improve.
+
+ 
+>>>>>>> 19918d205afaac82719c651f6f2db50408a4e648
