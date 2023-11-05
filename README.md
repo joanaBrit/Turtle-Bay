@@ -179,14 +179,16 @@ Working on CSS and fixing some issues. Working with CSS was one of my favourite 
 ```
 
 
-## Start Game Page:
+## Final Product
+
+### Start Game Page:
 
 ![Start overlay](<readmeimg/Start  overlay.png>)
 
 * Start overlay with the instructions and a start button.
 
 
-## Game In Progress Page:
+### Game In Progress Page:
 
 ![Game in progress](<readmeimg/game in progress.png>)
 
@@ -195,7 +197,7 @@ Working on CSS and fixing some issues. Working with CSS was one of my favourite 
 * Obstacles are moving checking if they have been hit.
 
 
-## Main Character Movements
+### End of the Game Overlays:
 
 ![Game over overlay](<readmeimg/Game Over overlay.png>)
 
