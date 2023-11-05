@@ -66,7 +66,7 @@ I began by drawing a grid in Figma, a collaborative interface for users in desig
 
 During this process, I also experimented with the design, figuring out how I wanted things to look. I moved on to writing the essential elements that I needed in the HTML, and I started to write by steps what I would need to do in JavaScript.
 
-![Wireframe grid](<readmeimg/wireframe plan.png>)
+![Wireframe grid](<readmeimg/wireframe grid.png>)
 
 ![Wireframe overlays](<readmeimg/wireframe overlays.png>)
 
