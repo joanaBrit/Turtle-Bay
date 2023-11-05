@@ -90,7 +90,23 @@ I added the turtle to a starting position and, with the Keypress event, made the
 
 I started with the animals' movements and made it as I wished for the obstacles close to the sea, in this case the sharks, to move at a faster speed using setInterval. While I was creating the movement for the obstacles, I was curious about what else I could do, so I tried many things. At some point, I discovered something that I found interesting to implement in the game: moving sharks around by 2 rows, which added an extra level of challenge.
 
-![Shaks movements](<readmeimg/Move Shark code.png>)
+
+```javascript
+
+//function move sharks right to the left
+function moveShark() {
+  currentSharkPosition.forEach((position, i) => {
+    //remove shark at this position
+    removeShark(position)
+    //calculate new shark positions, moving in 2 rows
+    let newPosition = position === 11 ? 32 : position - 1 && position === 22 ? 21 : position - 1
+    currentSharkPosition[i] = newPosition
+    // add sharks at the updated currentCrabPosition
+    addShark(newPosition)
+  })
+}
+
+```
 
 ### Day 5: 
 
