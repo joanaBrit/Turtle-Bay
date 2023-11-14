@@ -270,6 +270,7 @@ function removeTurtle() {
 
 // function move turtle in the grid
 function moveTurtle(event) {
+  event.preventDefault()
   if (!gameStarted) return
 
   const key = event.keyCode
