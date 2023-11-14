@@ -19,7 +19,7 @@ body {
   max-height: 100vh;
   height: 100vh;
   backdrop-filter: blur(2px);
-  overflow: hidden;
+  overflow: auto;
 }
 
 #grid-wrapper {
