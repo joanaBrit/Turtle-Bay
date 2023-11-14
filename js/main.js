@@ -94,6 +94,7 @@ function generateGrid() {
   startOctopusPosition.forEach(index => addOctopus(index))
 
   startSharkPosition.forEach(index => addShark(index))
+
 }
 
 generateGrid()
@@ -159,7 +160,9 @@ function updateScoreBy(amount) {
   score = Math.max(0, score + amount)
 }
 
+
 function checkIfTurtleHitSomething() {
+  // if (currentTurtlePosition !== previousTurtlePosition){
   // Check if turtle current position has an animal
   if (currentCrabPosition.includes(currentTurtlePosition)) {
     // remove a live
@@ -169,7 +172,7 @@ function checkIfTurtleHitSomething() {
     updateTurtlePosition(startTurtle)
     // Update score
     updateScoreBy(-150)
-    scoreDisplay.innerHTML = score
+    // scoreDisplay.innerHTML = score
   } else if (currentSeagullPosition.includes(currentTurtlePosition)) {
     // remove a live
     lives--
@@ -205,13 +208,14 @@ function checkIfTurtleHitSomething() {
       finalScore.innerHTML = score
     }
   }
+}
 
   // if lifes hit 0
   if (lives === 0) {
     endGame()
     showWindow('lose')
   }
-}
+// }
 
 function showWindow(type) {
   audioBackground.pause()
@@ -284,7 +288,8 @@ function moveTurtle(event) {
     scoreDisplay.innerHTML = score
   } else if (key === down && cellCount - 1 >= currentTurtlePosition + width) {
     targetPosition += width
-    
+    updateScoreBy(-150)
+    scoreDisplay.innerHTML = score
   } else if (key === right && currentTurtlePosition % width !== width - 1) {
     targetPosition++
 
