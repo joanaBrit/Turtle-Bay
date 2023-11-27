@@ -16,7 +16,6 @@ body {
   background-image: url('../assets/sea\ 1.png');
   background-size: cover;
   background-position: center;
-  max-height: 100vh;
   height: 100vh;
   backdrop-filter: blur(2px);
   overflow: auto;
@@ -84,8 +83,8 @@ body {
   margin: 10px;
 }
 
-.controls > p,
-.controls > img {
+.controls>p,
+.controls>img {
   padding: 0.5rem 2rem 0.2rem;
   letter-spacing: 0.02em;
 }
@@ -128,13 +127,24 @@ body {
   justify-content: space-evenly;
   color: white;
   flex-direction: row;
+  margin: 0 auto;
+  flex-wrap: nowrap;
+  margin-top: 10px;
   align-items: center;
 }
 
+#lives {
+  display: flex;
+  gap: 0.5rem;
+}
+
 #lives img {
-  max-width: 30px;
+  width: 30px;
   height: auto;
-  padding: 0px 2px;
+}
+
+#score{
+  width: 40px;
 }
 
 .turtle {
